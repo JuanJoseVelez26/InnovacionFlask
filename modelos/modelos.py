@@ -1,5 +1,5 @@
 # models.py
-from servicios.API_client import APIClient
+from servicios import APIClient
 
 class BaseModel:
     def __init__(self, table_name):
@@ -20,7 +20,7 @@ class BaseModel:
     def delete(self, where_condition):
         return self.client.delete_data(where_condition=where_condition)
 
-# Modelos específicos
+# Modelos específicos basados en los archivos proporcionados
 class Usuario(BaseModel):
     def __init__(self):
         super().__init__("usuarios")
@@ -44,3 +44,43 @@ class Perfil(BaseModel):
 class Solucion(BaseModel):
     def __init__(self):
         super().__init__("soluciones")
+
+class Proyecto(BaseModel):
+    def __init__(self):
+        super().__init__("proyectos")
+
+class Recurso(BaseModel):
+    def __init__(self):
+        super().__init__("recursos")
+
+class Actividad(BaseModel):
+    def __init__(self):
+        super().__init__("actividades")
+
+class Evaluacion(BaseModel):
+    def __init__(self):
+        super().__init__("evaluaciones")
+
+class Comentario(BaseModel):
+    def __init__(self):
+        super().__init__("comentarios")
+
+class Indicador(BaseModel):
+    def __init__(self):
+        super().__init__("indicadores")
+
+class Meta(BaseModel):
+    def __init__(self):
+        super().__init__("metas")
+
+class Rol(BaseModel):
+    def __init__(self):
+        super().__init__("roles")
+
+class Permiso(BaseModel):
+    def __init__(self):
+        super().__init__("permisos")
+
+class Notificacion(BaseModel):
+    def __init__(self):
+        super().__init__("notificaciones")

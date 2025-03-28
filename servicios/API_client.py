@@ -41,4 +41,3 @@ class APIClient:
 
     def delete_data(self, where_condition=None):
         return self._make_request("delete_json_entity", where_condition=where_condition)
-
