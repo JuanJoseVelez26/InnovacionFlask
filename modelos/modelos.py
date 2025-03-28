@@ -1,5 +1,4 @@
-# models.py
-from servicios import APIClient
+from servicios.API_client import APIClient
 
 class BaseModel:
     def __init__(self, table_name):
@@ -20,67 +19,14 @@ class BaseModel:
     def delete(self, where_condition):
         return self.client.delete_data(where_condition=where_condition)
 
-# Modelos específicos basados en los archivos proporcionados
-class Usuario(BaseModel):
-    def __init__(self):
-        super().__init__("usuarios")
+# Generar clases dinámicamente en lugar de escribirlas manualmente
+modelo_nombres = [
+    "usuarios", "ideas", "innovacion", "oportunidades", "perfil", "soluciones",
+    "proyectos", "recursos", "actividades", "evaluaciones", "comentarios",
+    "indicadores", "metas", "roles", "permisos", "notificaciones"
+]
 
-class Idea(BaseModel):
-    def __init__(self):
-        super().__init__("ideas")
+# Crear las clases dinámicamente usando `type`
+for nombre in modelo_nombres:
+    globals()[nombre.capitalize()] = type(nombre.capitalize(), (BaseModel,), {"__init__": lambda self, n=nombre: super(self.__class__, self).__init__(n)})
 
-class Innovacion(BaseModel):
-    def __init__(self):
-        super().__init__("innovacion")
-
-class Oportunidad(BaseModel):
-    def __init__(self):
-        super().__init__("oportunidades")
-
-class Perfil(BaseModel):
-    def __init__(self):
-        super().__init__("perfil")
-
-class Solucion(BaseModel):
-    def __init__(self):
-        super().__init__("soluciones")
-
-class Proyecto(BaseModel):
-    def __init__(self):
-        super().__init__("proyectos")
-
-class Recurso(BaseModel):
-    def __init__(self):
-        super().__init__("recursos")
-
-class Actividad(BaseModel):
-    def __init__(self):
-        super().__init__("actividades")
-
-class Evaluacion(BaseModel):
-    def __init__(self):
-        super().__init__("evaluaciones")
-
-class Comentario(BaseModel):
-    def __init__(self):
-        super().__init__("comentarios")
-
-class Indicador(BaseModel):
-    def __init__(self):
-        super().__init__("indicadores")
-
-class Meta(BaseModel):
-    def __init__(self):
-        super().__init__("metas")
-
-class Rol(BaseModel):
-    def __init__(self):
-        super().__init__("roles")
-
-class Permiso(BaseModel):
-    def __init__(self):
-        super().__init__("permisos")
-
-class Notificacion(BaseModel):
-    def __init__(self):
-        super().__init__("notificaciones")

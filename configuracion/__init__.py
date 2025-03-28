@@ -1,22 +1,16 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 import json
 import os
 
-db = SQLAlchemy()
+# Cargar configuración desde el archivo JSON
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
 
-def create_app():
-    app = Flask(__name__)
+with open(CONFIG_PATH, "r", encoding="utf-8") as config_file:
+    config = json.load(config_file)
 
-    # Cargar configuración desde JSON
-    with open("configuracion/config.json") as config_file:
-        config = json.load(config_file)
-        app.config.update(config)
-
-    db.init_app(app)
-
-    # Crear directorios si no existen
-    if not os.path.exists(app.config["MEDIA_ROOT"]):
-        os.makedirs(app.config["MEDIA_ROOT"])
-
-    return app
+# Variables globales
+SECRET_KEY = config["SECRET_KEY"]
+DEBUG = config["DEBUG"]
+SQLALCHEMY_DATABASE_URI = config["SQLALCHEMY_DATABASE_URI"]
+SQLALCHEMY_TRACK_MODIFICATIONS = config["SQLALCHEMY_TRACK_MODIFICATIONS"]
+API_URL = config["API_URL"]
