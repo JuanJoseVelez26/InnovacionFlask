@@ -1,0 +1,14 @@
+{
+    "SECRET_KEY": "django-insecure-#1!vjo3l)hf!zh+kzob43t2-f)ssp9z3k-b2@j(@&w9+@6l21@",
+    "DEBUG": true,
+    "ALLOWED_HOSTS": ["*"],
+    "SQLALCHEMY_DATABASE_URI": "sqlite:///db.sqlite3",
+    "SQLALCHEMY_TRACK_MODIFICATIONS": false,
+    "LANGUAGE_CODE": "es",
+    "TIME_ZONE": "UTC",
+    "STATIC_URL": "static/",
+    "MEDIA_URL": "/media/",
+    "MEDIA_ROOT": "media/",
+    "CRISPY_TEMPLATE_PACK": "bootstrap4",
+    "API_URL": "http://190.217.58.246:5186/api/SGV/procedures/execute"
+}
