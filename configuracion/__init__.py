@@ -1,10 +1,11 @@
 import json
 import os
 
-# Cargar configuración desde el archivo JSON
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
+# Obtener la ruta absoluta del directorio de configuración
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))  # Esto ya apunta a 'configuracion'
+CONFIG_PATH = os.path.join(BASE_DIR, "config.json")  # Agregar 'config.json'
 
+# Cargar configuración desde el archivo JSON
 with open(CONFIG_PATH, "r", encoding="utf-8") as config_file:
     config = json.load(config_file)
 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            background-color: #f0f0f0;
+            background-image: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 25%, #d0d0d0 50%, #b0b0b0 75%, #a0a0a0 100%);
+            color: #000000;
+        }
+        .form-label {
+            color: #000000;
+        }
+        .form-control {
+            color: #000000;
+            font-family: 'Roboto', sans-serif;
+        }
+        .alert-info {
+            background-color: #e3f2fd;
+        }
+        .alert-danger {
+            color: #000000;
+        }
+        .text-primary {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-5" style="width: 100%; max-width: 600px;">
+            <h2 class="text-center mb-4">Crea tu Cuenta</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="post" action="{{ url_for('register') }}">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password1" class="form-label">Contraseña</label>
+                    <input type="password" name="password1" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Repetir Contraseña</label>
+                    <input type="password" name="password2" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" name="nombre" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" name="fecha_nacimiento" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" name="direccion" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea name="descripcion" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="area_expertise" class="form-label">Área de Expertise</label>
+                    <input type="text" name="area_expertise" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="informacion_adicional" class="form-label">Información Adicional</label>
+                    <textarea name="informacion_adicional" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <!-- Botón de Registro -->
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </div>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}" class="text-primary">Iniciar sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
