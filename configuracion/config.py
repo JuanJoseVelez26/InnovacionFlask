@@ -1,39 +1,59 @@
 import os
+from dotenv import load_dotenv
 
-# Exportar SECRET_KEY directamente
-SECRET_KEY = os.getenv("django-insecure-#1!vjo3l)hf!zh+kzob43t2-f)ssp9z3k-b2@j(@&w9+@6l21@", "clave-segura")
+# Cargar variables de entorno
+load_dotenv()
+
+# Exportar SECRET_KEY directamente para compatibilidad
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 class Config:
     # Seguridad
-    SECRET_KEY = SECRET_KEY  # Usa la variable exportada
-    DEBUG = os.getenv("DEBUG", "True") == "True"
-
+    SECRET_KEY = SECRET_KEY
+    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+    
     # Directorios
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
+    DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), "data")
+    
+    # Crear directorio de datos si no existe
+    os.makedirs(DATA_DIR, exist_ok=True)
+    
     # Base de Datos
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", f"sqlite:///{os.path.join(DATA_DIR, 'db.sqlite3')}")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
+    
     # Configuración de sesiones
     SESSION_TYPE = "filesystem"
-    SESSION_PERMANENT = False
-    SESSION_FILE_DIR = os.path.join(BASE_DIR, "flask_sessions")
-
+    SESSION_PERMANENT = True
+    PERMANENT_SESSION_LIFETIME = 3600  # 1 hora
+    SESSION_FILE_DIR = os.path.join(DATA_DIR, "flask_sessions")
+    
+    # Crear directorio de sesiones si no existe
+    os.makedirs(SESSION_FILE_DIR, exist_ok=True)
+    
     # Archivos estáticos y multimedia
     STATIC_FOLDER = "static"
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, "media")
-
+    UPLOAD_FOLDER = os.path.join(DATA_DIR, "media")
+    
+    # Crear directorio de medios si no existe
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    
     # Configuración de API externa
-    API_URL = os.getenv("API_URL", "http://190.217.58.246:5186/api/SGV/procedures/execute")
-
+    API_URL = os.getenv("API_URL")
+    
     # Configuración de autenticación y hashing de contraseñas
     PASSWORD_HASH_METHOD = "pbkdf2:sha256"
-    PASSWORD_SALT = os.getenv("PASSWORD_SALT", "un-salt-seguro")
-
+    PASSWORD_SALT = os.getenv("PASSWORD_SALT")
+    
+    # Configuración de seguridad
+    WTF_CSRF_ENABLED = True
+    WTF_CSRF_SECRET_KEY = SECRET_KEY
+    
+    # Configuración de JWT
+    JWT_SECRET_KEY = SECRET_KEY
+    JWT_ACCESS_TOKEN_EXPIRES = 3600  # 1 hora
+    
     # Internacionalización y zona horaria
     LANGUAGE_CODE = "es"
     TIMEZONE = "UTC"
-
-    # Extensiones como Flask-WTF (Formularios)
-    WTF_CSRF_ENABLED = True
