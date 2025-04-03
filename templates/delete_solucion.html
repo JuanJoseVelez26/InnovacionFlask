@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Título de la página -->
+<div class="row">
+    <div class="col-sm-6">
+        <div class="page-title-box">
+            <h4>Soluciones</h4>
+        </div>
+    </div>
+</div>
+
+<!-- Formulario de confirmación de eliminación -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-danger">Eliminar Solución</h4>
+
+                <!-- Mensaje de confirmación -->
+                <p class="text-warning"><strong>¿Está seguro de que desea eliminar esta solución?</strong></p>
+                <p>Solución: <b>{{ solucion.titulo }}</b></p>
+
+                <!-- Formulario para confirmar eliminación -->
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+
+                    {% if is_experto %}
+                        <div class="form-group">
+                            <label for="mensaje_experto">Mensaje del experto (opcional)</label>
+                            <textarea class="form-control" id="mensaje_experto" name="mensaje_experto" rows="3" placeholder="Escriba un mensaje aquí (opcional)"></textarea>
+                        </div>
+                    {% endif %}
+
+                    <!-- Botones de acción -->
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{{ url_for('soluciones.list_soluciones') }}" class="btn btn-light">Regresar</a>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
