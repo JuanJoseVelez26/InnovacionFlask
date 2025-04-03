@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link href="{% static 'libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'libs/animate.css/animate.min.css' %}" rel="stylesheet">
+<link rel="shortcut icon" href="{% static 'img/icono.ico' %}">
+<title>{% block title %}Panel de Control{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+{% endblock head %}
+
+{% block content %}
+<!-- Header del Dashboard -->
+<div class="dashboard-header">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <h2 class="mb-0">Panel de Control</h2>
+                <p class="mb-0 opacity-75">Última actualización: {% now "j F Y H:i" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <!-- Tarjetas de Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card border-0 shadow-sm animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-primary mb-2">Ideas</h6>
+                            <h2 class="mb-0">{{ ideas_count|default:0 }}</h2>
+                            <div class="metric-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> +5% vs mes anterior
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-lightbulb text-primary stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card border-0 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-info mb-2">Oportunidades</h6>
+                            <h2 class="mb-0">{{ oportunidades_count|default:0 }}</h2>
+                            <div class="metric-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> +8% vs mes anterior
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line text-info stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card border-0 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-warning mb-2">Soluciones</h6>
+                            <h2 class="mb-0">{{ solucion_count|default:0 }}</h2>
+                            <div class="metric-trend trend-down">
+                                <i class="fas fa-arrow-down"></i> -2% vs mes anterior
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-puzzle-piece text-warning stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card border-0 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-success mb-2">Usuarios</h6>
+                            <h2 class="mb-0">{{ usuario_count|default:0 }}</h2>
+                            <div class="metric-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> +8% Último mes
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users text-success stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row">
+        <div class="col-xl-8 mb-4">
+            <div class="chart-container">
+                <h5 class="mb-4">Tendencia de Actividades</h5>
+                <canvas id="activityChart" 
+                        data-ideas="{{ ideas_count|default:0 }}" 
+                        data-oportunidades="{{ oportunidades_count|default:0 }}" 
+                        data-soluciones="{{ solucion_count|default:0 }}">
+                </canvas>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="chart-container">
+                <h5 class="mb-4">Distribución</h5>
+                <canvas id="distributionChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const activityCanvas = document.getElementById('activityChart');
+    
+    const ideasCount = parseInt(activityCanvas.getAttribute('data-ideas'));
+    const oportunidadesCount = parseInt(activityCanvas.getAttribute('data-oportunidades'));
+    const solucionCount = parseInt(activityCanvas.getAttribute('data-soluciones'));
+
+    new Chart(activityCanvas.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+            datasets: [
+                { label: 'Ideas', data: [65, 59, 80, 81, 56, ideasCount], borderColor: '#4e73df', tension: 0.4 },
+                { label: 'Oportunidades', data: [28, 48, 40, 19, 86, oportunidadesCount], borderColor: '#17a2b8', tension: 0.4 },
+                { label: 'Soluciones', data: [35, 40, 45, 50, 55, solucionCount], borderColor: '#ffc107', tension: 0.4 }
+            ]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+});
+</script>
+{% endblock content %}

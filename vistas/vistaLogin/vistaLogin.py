@@ -40,6 +40,6 @@ def login_view():
 
         except AuthenticationError as e:
             flash(str(e), 'danger')
-            return render_template('login/login.html')
+            return render_template('templateslogin/login.html')
 
-    return render_template('login/login.html')
+    return render_template('templateslogin/login.html')
