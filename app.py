@@ -9,7 +9,7 @@ from routes.rutaPerfil import perfil_bp
 app = Flask(__name__)  
 
 # Cargar configuración desde JSON
-with open('config.json') as config_file:
+with open('configuracion/config.json') as config_file:
     config = json.load(config_file)
 
 # Actualizar la configuración de Flask con los valores del JSON
