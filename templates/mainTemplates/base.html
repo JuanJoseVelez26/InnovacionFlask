@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Menú{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap Css -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{ url_for('static', filename='css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- App Css -->
+    <link href="{{ url_for('static', filename='css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/icono.ico') }}">
+    <link href="{{ url_for('static', filename='styles/logo.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body data-sidebar="dark">
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <div class="navbar-brand-box">
+                        <a href="{{ url_for('authentication.app') }}" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <i class="fas fa-lightbulb main-icon-without-slide icon-png-container pd-lv4" style="font-size: 30px;"></i>
+                            </span>
+                            <span class="logo-lg">
+                                <img src="{{ url_for('static', filename='img/MALLA.png') }}" alt="Icono personalizado" style="width: 50px; height: 50px;">
+                                <span style="font-size: 2px; margin-left: 10px; top: 50%; color: #ffffff;">INNOVACIÓN</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="vertical-menu">
+            <div data-simplebar class="h-100">
+                <div id="sidebar-menu">
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="menu-title">Main</li>
+                        <li id="dashboard_li">
+                            <a href="{{ url_for('authentication.dashboard') }}" class="waves-effect">
+                                <i class="mdi mdi-view-dashboard"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li id="proyectos_li">
+                            <a href="{{ url_for('authentication.listar_proyectos') }}" class="waves-effect">
+                                <i class="mdi mdi-briefcase"></i>
+                                <span>Proyectos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="page-content">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/metismenu/metisMenu.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/simplebar/simplebar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/node-waves/waves.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ajax.js') }}"></script>
+</body>
+</html>

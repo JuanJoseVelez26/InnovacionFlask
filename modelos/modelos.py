@@ -1,4 +1,4 @@
-from servicios.API_client import APIClient
+
 
 class BaseModel:
     def __init__(self, table_name):
